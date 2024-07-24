@@ -1,6 +1,19 @@
 .App {
   text-align: center;
 }
+.Indian-gradient{
+  background: linear-gradient(to right, orange, white, green);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+
+
+
+
+
+
+
 
 .App-logo {
   height: 40vmin;
