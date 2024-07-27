@@ -1,5 +1,7 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, {  useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
+import { useNavigate } from 'react-router-dom'
 
 const Create = () => {
     const [title,setTitle]=useState('')
@@ -7,14 +9,23 @@ const Create = () => {
     const [image,setImage]=useState('')
     const [ingredients,setIngredients]=useState('')
     const [recipe,setRecipe]=useState('')
+    const [userId,setUserId]=useState('')
+
+    const navigate = useNavigate()
+
     useEffect(()=>{
-        // console.log("hello: ",recipe)
+        setUserId(localStorage.getItem('userId'))
     })
+
     const handleSubmit =async()=>{
         try {
-            const response = await axios.post('',{title,shortDesc,image,ingredients,recipe})
+            const response = await axios.post(`http://localhost:5001/create/${userId}`,{title,shortDesc,image,ingredients,recipe})
+            if(response.status === 200){
+                toast.success('Recipe Created Successfully')
+                navigate('/')
+            }
         } catch (error) {
-            
+            toast.error('Something Went Wrong')
         }
     }
     return (

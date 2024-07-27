@@ -38,7 +38,7 @@ function App() {
             <Route path="/register" element={<Register />} />
           </>
         }
-        <Route path="/recipe" element={<Recipe />} />
+        <Route path="/recipe/:recipeId" element={<Recipe />} />
         <Route path="/profile/:id" element={<Profile />} />
         <Route path="/create" element={<Create />} />
       </Routes>
