@@ -29,7 +29,7 @@ const Home = () => {
                     // console.log(arr)
                 }
                 else if(response.status === 201){
-                    console.log('user doesnot exist')
+                    // console.log('user doesnot exist')
                 }
             } catch (error) {
                 console.log(error);

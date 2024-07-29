@@ -9,6 +9,7 @@ import { Toaster } from "react-hot-toast";
 import Profile from "./Pages/Profile";
 import { useEffect, useState } from "react";
 import Create from "./Pages/Create";
+import ProfilePage from "./Pages/ProfilePage";
 
 function App() {
   const [token, setToken] = useState('');
@@ -41,6 +42,7 @@ function App() {
         <Route path="/recipe/:recipeId" element={<Recipe />} />
         <Route path="/profile/:id" element={<Profile />} />
         <Route path="/create" element={<Create />} />
+        <Route path="/profilePage/:id" element={<ProfilePage />} />
       </Routes>
     </div>
   );

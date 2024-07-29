@@ -1,18 +1,21 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-
+import { useNavigate, useParams } from 'react-router-dom';
+import Other from './Other';
+import defaultImage from '../Assets/Images/image-square.png';
+import "../App.css"
 const Recipe = () => {
     const [state, setState] = useState(1);
-    const [recipeData, setRecipeData] = useState('');
+    const [recipeData, setRecipeData] = useState({});
     const [validUser, setValidUser] = useState(false);
     const [userId, setUserId] = useState('');
     const { recipeId } = useParams();
+    const [username,setUsername]=useState('')
+    const navigate = useNavigate()
 
     useEffect(() => {
         const getUserId = () => {
             const temp = localStorage.getItem('userId');
-            console.log("Retrieved userId from local storage: ", temp);
             setUserId(temp);
         }
         getUserId();
@@ -24,8 +27,11 @@ const Recipe = () => {
             }
             try {
                 const response = await axios.get(`http://localhost:5001/recipe/${recipeId}`);
+                // console.log('recipe id: ',recipeId)
                 if (response.status === 200) {
-                    setRecipeData(response.data);
+                    setRecipeData(response.data.recipe);
+                    setUsername(response.data.userInfo.username)
+                    // console.log(response.data.userInfo.username); 
                 } else {
                     console.log('Nothing Found');
                 }
@@ -41,7 +47,7 @@ const Recipe = () => {
             }
 
             if (userId !== recipeOwnerId) {
-                console.log('UserId does not match the recipe owner');
+                // console.log('UserId does not match the recipe owner');
                 setValidUser(false);
                 return;
             }
@@ -49,8 +55,9 @@ const Recipe = () => {
             try {
                 const response = await axios.post('http://localhost:5001/checkUserValidity', { userId });
                 if (response.status === 200) {
-                    console.log('User is valid');
                     setValidUser(true);
+                    // console.log(response.data.checkUser.username)
+                    setUsername(response.data.checkUser.username)
                 } else {
                     console.log('User is Invalid');
                     setValidUser(false);
@@ -68,47 +75,39 @@ const Recipe = () => {
         }
 
         fetchData();
-    }, [recipeId, userId, recipeData.userId]);
 
+
+    }, [recipeId, userId, recipeData.userId]);
     return (
         <div className='flex'>
             <div className='LEFT w-3/4 h-[100vh]'>
                 <div className='TOP w-full h-2/6 flex gap-6'>
-                    <div style={{ backgroundImage: `url('${recipeData.image}')`,
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                        backgroundRepeat: 'no-repeat '
-                    }}
-                        className='IMAGE bg-red-300 h-full w-1/3 rounded-lg'></div>
+                    {recipeData.image ? 
+                        <div style={{ 
+                            backgroundImage: `url('${recipeData.image}')`,
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center',
+                            backgroundRepeat: 'no-repeat'
+                        }}
+                            className='IMAGE bg-red-300 h-full w-1/3 rounded-lg'>
+                        </div>
+                        :
+                        <div style={{ 
+                            backgroundImage: `url('${defaultImage}')`,
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center',
+                            backgroundRepeat: 'no-repeat'
+                        }}
+                            className='IMAGE bg-red-300 h-full w-1/3 rounded-lg'>
+                        </div>
+                    }
                     <div className='w-2/3 flex flex-col justify-between'>
                         <div>
+                            <p className='text-xs -mb-1'>{recipeData.createdAt}</p>
                             <h1 className='text-4xl font-bold'>{recipeData.title}</h1>
                             <p className='text-xl mt-2'>{recipeData.shortDesc}</p>
                         </div>
-                        <div className='flex gap-2 items-center'>
-                            <div className='STAR-RATING'>
-                                <i className="fa-regular fa-star text-xl"></i>
-                                <i className="fa-regular fa-star text-xl"></i>
-                                <i className="fa-regular fa-star text-xl"></i>
-                                <i className="fa-regular fa-star text-xl"></i>
-                                <i className="fa-regular fa-star text-xl"></i>
-                            </div>
-                            <button className='LIKE'>
-                                <i className="fa-regular fa-heart text-xl"></i>
-                            </button>
-                            {validUser ?
-                                <div className='flex gap-2'>
-                                    <button className='Edit'>
-                                        <i className="fa-regular fa-pen-to-square text-xl"></i>
-                                    </button>
-                                    <button className='Delete'>
-                                        <i className="fa-solid fa-trash text-xl"></i>
-                                    </button>
-                                </div>
-                                :
-                                <></>
-                            }
-                        </div>
+                        <Other />
                     </div>
                 </div>
                 <div className='BOTTOM bg-green-300 w-full h-4/6 mt-5'>
@@ -117,13 +116,9 @@ const Recipe = () => {
                     <button className='border border-black px-2' onClick={() => setState(3)}>Comments</button>
                     <div className='mt-3'>
                         {state === 1 ?
-                            <div>
-                                {recipeData.ingredients}
-                            </div>
+                            <div className='scrollable-content px-4' dangerouslySetInnerHTML={{ __html: recipeData.ingredients }} />
                             : state === 2 ?
-                                <div>
-                                    {recipeData.recipe}
-                                </div>
+                                <div className='scrollable-content px-4' dangerouslySetInnerHTML={{ __html: recipeData.recipe }} /> 
                                 :
                                 <div>
                                     Comment Section
@@ -132,14 +127,14 @@ const Recipe = () => {
                     </div>
                 </div>
             </div>
-            <div className='RIGHT w-1/4 h-[100vh] '>
+            <div className='RIGHT w-1/4 h-[100vh]'>
                 <div className='PROFILE h-40 px-5'>
                     <p>Posted By:</p>
-                    <div className='flex items-center gap-5 mt-5'>
+                    <div className='flex items-center gap-5 mt-1 rounded-lg  cursor-pointer border border-gray-300 py-4'>
                         <div className='PROFILE_PICTURE w-20 h-20 ml-6 bg-yellow-300 rounded-full'></div>
                         <div>
-                            <h1 className='text-2xl'>Name</h1>
-                            <h2>UserId</h2>
+                            <h1 className='text-2xl'>{username}</h1>
+                            {/* <h2>UserId</h2> */}
                         </div>
                     </div>
                 </div>
