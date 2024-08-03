@@ -71,7 +71,7 @@ const Other = () => {
                     setLiked(response.data.data.like.includes(userId));
                 }
             } catch (error) {
-                console.log(error);
+                // console.log(error);
             }
         };
 
@@ -131,14 +131,14 @@ const Other = () => {
     };
 
     return (
-        <div className='flex gap-2 items-center'>
-            <div className='STAR-RATING'>
+        <div className='flex gap-5 items-center'>
+            {/* <div className='STAR-RATING'>
                 <i className="fa-regular fa-star text-xl"></i>
                 <i className="fa-regular fa-star text-xl"></i>
                 <i className="fa-regular fa-star text-xl"></i>
                 <i className="fa-regular fa-star text-xl"></i>
                 <i className="fa-regular fa-star text-xl"></i>
-            </div>
+            </div> */}
             {liked ? (
                 <div className='flex gap-1 items-center'>
                     <button onClick={handleLike} className='LIKE'>
@@ -156,7 +156,7 @@ const Other = () => {
             )}
 
             {validUser ? (
-                <div className='flex gap-2'>
+                <div className='flex gap-5'>
                     <button className='Edit'>
                         <i className="fa-regular fa-pen-to-square text-xl"></i>
                     </button>

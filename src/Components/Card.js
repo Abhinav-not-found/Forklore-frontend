@@ -46,13 +46,7 @@ const Card = ({ title, image, id }) => {
                 :
                 <h1 className='text-lg'>title</h1>
                 }
-                <div>
-                    <i className="fa-regular fa-star text-sm"></i>
-                    <i className="fa-regular fa-star text-sm"></i>
-                    <i className="fa-regular fa-star text-sm"></i>
-                    <i className="fa-regular fa-star text-sm"></i>
-                    <i className="fa-regular fa-star text-sm"></i>
-                </div>
+                
             </div>
         </div>
     );

@@ -1,9 +1,11 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Other from './Other';
 import defaultImage from '../Assets/Images/image-square.png';
 import "../App.css"
+import Comment from './Comment';
+import SuggestionCard from './SuggestionCard';
 const Recipe = () => {
     const [state, setState] = useState(1);
     const [recipeData, setRecipeData] = useState({});
@@ -75,11 +77,28 @@ const Recipe = () => {
         }
 
         fetchData();
-
+        // getSuggestions();
 
     }, [recipeId, userId, recipeData.userId]);
+
+    useEffect(()=>{
+        getSuggestions();
+    },[recipeData.userId])
+    const [suggestionInfo,setSuggesitonInfo]=useState([])
+        const getSuggestions=async()=>{
+            try {
+                const response = await axios.get(`http://localhost:5001/getSuggestion/${recipeData.userId}`)
+                if(response.status===200){
+                    console.log(response.data.recipeById)
+                    setSuggesitonInfo(response.data.recipeById)
+                }
+            } catch (error) {
+                console.log('Error in getSuggestions',error)
+            }
+        }
+        
     return (
-        <div className='flex'>
+        <div className='flex pb-10'>
             <div className='LEFT w-3/4 h-[100vh]'>
                 <div className='TOP w-full h-2/6 flex gap-6'>
                     {recipeData.image ? 
@@ -110,19 +129,17 @@ const Recipe = () => {
                         <Other />
                     </div>
                 </div>
-                <div className='BOTTOM bg-green-300 w-full h-4/6 mt-5'>
+                <div className='BOTTOM w-full h-4/6 mt-5 pb-10'>
                     <button className='border border-black px-2 mr-1' onClick={() => setState(1)}>Ingredients</button>
                     <button className='border border-black px-2 mr-1' onClick={() => setState(2)}>Recipe</button>
-                    <button className='border border-black px-2' onClick={() => setState(3)}>Comments</button>
+                    {/* <button className='border border-black px-2' onClick={() => setState(3)}>Comments</button> */}
                     <div className='mt-3'>
                         {state === 1 ?
-                            <div className='scrollable-content px-4' dangerouslySetInnerHTML={{ __html: recipeData.ingredients }} />
+                            <div className='scrollable-content text-xl px-4' dangerouslySetInnerHTML={{ __html: recipeData.ingredients }} />
                             : state === 2 ?
-                                <div className='scrollable-content px-4' dangerouslySetInnerHTML={{ __html: recipeData.recipe }} /> 
+                                <div className='scrollable-content text-xl px-4' dangerouslySetInnerHTML={{ __html: recipeData.recipe }} /> 
                                 :
-                                <div>
-                                    Comment Section
-                                </div>
+                                <Comment/>
                         }
                     </div>
                 </div>
@@ -138,7 +155,11 @@ const Recipe = () => {
                         </div>
                     </div>
                 </div>
-                <div className='SUGGESTIONS'></div>
+                <div className='SUGGESTIONS px-5 flex flex-col gap-3'>
+                    {Array.isArray(suggestionInfo) && suggestionInfo.map((data,index)=>{
+                        <SuggestionCard key={index} title={data.title} image={data.image}/>
+                    })}
+                </div>
             </div>
         </div>
     )

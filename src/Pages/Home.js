@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Card from '../Components/Card';
 import axios from 'axios';
+// import Test from './Test';
 
 const Home = () => {
     const [userId, setUserId] = useState('');
@@ -44,7 +45,7 @@ const Home = () => {
                     const response = await axios.get('http://localhost:5001/getAllRecipe')
                     if(response.status===200){
                         setAllRecipe(response.data)
-                        // console.log(allRecipe)
+                        // console.log(response.data)
                     }
                     else{
                         console.log('no data')
@@ -58,6 +59,7 @@ const Home = () => {
             console.log(error)
         }
     },[])
+
     return (
         <div className='h-full'>
             <h1>All Recipes</h1>
@@ -85,6 +87,7 @@ const Home = () => {
                 ))}
             
             </div>
+            {/* <Test/> */}
         </div>
     );
 };

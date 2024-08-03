@@ -36,7 +36,18 @@ const Login = () => {
         }
     };
 
-
+    const [eyeActive,setEyeActive]=useState(true)
+    const [inputType, setInputType]=useState('password')
+    const handleEye=()=>{
+        if(eyeActive){
+            setEyeActive(false)
+            setInputType('text')
+        }
+        else{
+            setEyeActive(true)
+            setInputType('password')
+        }
+    }
     return (
         <div className='h-screen flex'>
             <div  style={{zIndex:100}} className='LEFT w-1/2 p-4'> 
@@ -60,10 +71,20 @@ const Login = () => {
             <div className='RIGHT w-1/2 p-4 pl-10 text-center'>
                 <h1 className='text-7xl font-bold mt-20'>Login</h1>
                 <div className='ml-5'>
-                    <p className='text-2xl mt-10 -ml-40'>Email</p>
-                    <input value={email} onChange={handleEmailChange} className='border border-black text-xl px-1 py-1 outline-none rounded-md bg-transparent' type="text"/><br/>
-                    <p className='text-2xl mt-5 -ml-28'>Password</p>
-                    <input value={password} onChange={handlePasswordChange} className='border border-black text-xl px-1 py-1 outline-none rounded-md bg-transparent' type="password"/><br/>
+                    <p className='text-2xl mt-10 -ml-48'>Email</p>
+                    <input value={email} onChange={handleEmailChange} className='border border-black text-xl px-1 py-1 outline-none w-[46%] ml-0 rounded-md bg-transparent' type="text"/><br/>
+                    <p className='text-2xl mt-5 -ml-36'>Password</p>
+                    <div className=' flex items-center border border-black w-fit ml-[27%] rounded-md'>
+                        <input value={password} onChange={handlePasswordChange} className='border  text-xl px-1 py-1 w-fit outline-none rounded-md bg-transparent' type={inputType}/>
+                        <button onClick={handleEye}>
+                            {eyeActive? 
+                            <i class="fa-regular fa-eye-slash pl-4 pr-3"></i>
+                            :
+                            <i class="fa-regular fa-eye pl-4 pr-3"></i>
+                            }
+                        </button>
+                    </div>
+                    <br/>
                     <button onClick={handleLogin} className='border border-black text-white bg-black p-2 mt-5 rounded-md text-2xl'>Login</button>
                     <p className='text-xl mt-6'>Don't have an account? <span onClick={()=>navigate('/register')} className='underline cursor-pointer'>Register</span> here</p>
                 </div>
