@@ -1,9 +1,10 @@
+// Other.js
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useNavigate, useParams } from 'react-router-dom';
 
-const Other = () => {
+const Other = ({ handleEdit }) => {
     const [recipeData, setRecipeData] = useState('');
     const [validUser, setValidUser] = useState(false);
     const [userId, setUserId] = useState('');
@@ -132,13 +133,6 @@ const Other = () => {
 
     return (
         <div className='flex gap-5 items-center'>
-            {/* <div className='STAR-RATING'>
-                <i className="fa-regular fa-star text-xl"></i>
-                <i className="fa-regular fa-star text-xl"></i>
-                <i className="fa-regular fa-star text-xl"></i>
-                <i className="fa-regular fa-star text-xl"></i>
-                <i className="fa-regular fa-star text-xl"></i>
-            </div> */}
             {liked ? (
                 <div className='flex gap-1 items-center'>
                     <button onClick={handleLike} className='LIKE'>
@@ -148,7 +142,7 @@ const Other = () => {
                 </div>
             ) : (
                 <div className='flex gap-1 items-center'>
-                    <button onClick={handleLike} className='LIKE'>
+                    <button onClick={handleLike} className='LIKE hover:text-red-600'>
                         <i className="fa-regular fa-heart text-xl"></i>
                     </button>
                     <p className='text-xl'>{likeCounter}</p>
@@ -157,10 +151,10 @@ const Other = () => {
 
             {validUser ? (
                 <div className='flex gap-5'>
-                    <button className='Edit'>
+                    <button className='Edit hover:text-yellow-500' onClick={handleEdit}>
                         <i className="fa-regular fa-pen-to-square text-xl"></i>
                     </button>
-                    <button onClick={handleDelete} className='Delete'>
+                    <button onClick={handleDelete} className='Delete hover:text-red-600'>
                         <i className="fa-solid fa-trash text-xl"></i>
                     </button>
                 </div>

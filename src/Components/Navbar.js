@@ -46,8 +46,8 @@ const Navbar = () => {
             {
                 loggedIn ? 
                 <div className='flex gap-4'>
-                    <button onClick={()=>navigate('/create')} className='border border-black py-1 px-3  rounded-lg'>Create</button>
-                    <button onClick={handleLogout} className='border border-black px-3 py-1 rounded-lg'>Logout</button>
+                    <button onClick={()=>navigate('/create')} className='border border-black py-1 px-3  rounded-lg hover:bg-black hover:text-white'>Create</button>
+                    <button onClick={handleLogout} className='border border-black px-3 py-1 rounded-lg hover:bg-black hover:text-white'>Logout</button>
                     <div onClick={handleProfile} className='w-10 h-10 rounded-full bg-red-300 cursor-pointer'></div>
                 </div>
                 :

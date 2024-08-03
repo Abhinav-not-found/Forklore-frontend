@@ -10,6 +10,9 @@ import Profile from "./Pages/Profile";
 import { useEffect, useState } from "react";
 import Create from "./Pages/Create";
 import ProfilePage from "./Pages/ProfilePage";
+import EditPage from "./Components/EditPage";
+import AllRecipe from "./Pages/AllRecipe";
+import MyRecipe from "./Pages/MyRecipe";
 
 function App() {
   const [token, setToken] = useState('');
@@ -43,6 +46,9 @@ function App() {
         <Route path="/profile/:id" element={<Profile />} />
         <Route path="/create" element={<Create />} />
         <Route path="/profilePage/:id" element={<ProfilePage />} />
+        <Route path="/edit/:recipeId" element={<EditPage/>}/>
+        <Route path="/allRecipe" element={<AllRecipe/>}/>
+        <Route path="/myRecipe" element={<MyRecipe/>}/>
       </Routes>
     </div>
   );
