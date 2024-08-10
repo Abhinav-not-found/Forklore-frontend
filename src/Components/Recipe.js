@@ -1,6 +1,6 @@
 // Recipe.js
 import axios from 'axios';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Other from './Other';
 import defaultImage from '../Assets/Images/image-square.png';
@@ -15,7 +15,8 @@ const Recipe = () => {
     const [userId, setUserId] = useState('');
     const { recipeId } = useParams();
     const [username, setUsername] = useState('');
-    const [isEditActive, setIsEditActive] = useState('');
+    const [InUserId,setInUserId]=useState('')
+    // const [isEditActive, setIsEditActive] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -34,6 +35,8 @@ const Recipe = () => {
                 const response = await axios.get(`http://localhost:5001/recipe/${recipeId}`);
                 if (response.status === 200) {
                     setRecipeData(response.data.recipe);
+                    setInUserId(response.data.recipe.userId)
+                    // console.log(response.data.recipe.userId)
                     setUsername(response.data.userInfo.username);
                 } else {
                     console.log('Nothing Found');
@@ -83,7 +86,7 @@ const Recipe = () => {
         try {
             const response = await axios.get(`http://localhost:5001/getSuggestion/${recipeData.userId}`);
             if (response.status === 200) {
-                console.log(response.data.recipeById);
+                console.log(response.data.recipeById._id);
                 setSuggestionInfo(response.data.recipeById);
             }
         } catch (error) {
@@ -148,7 +151,7 @@ const Recipe = () => {
             <div className='RIGHT w-1/4 h-[100vh]'>
                 <div className='PROFILE h-40 px-5'>
                     <p>Posted By:</p>
-                    <div className='flex items-center gap-5 mt-1 rounded-lg cursor-pointer border border-gray-300 py-4'>
+                    <div onClick={()=>{navigate(`/profilePage/${InUserId}`)}} className='flex items-center gap-5 mt-1 rounded-lg cursor-pointer border border-gray-300 py-4'>
                         <div className='PROFILE_PICTURE w-20 h-20 ml-6 bg-yellow-300 rounded-full'></div>
                         <div>
                             <h1 className='text-2xl'>{username}</h1>
@@ -157,7 +160,7 @@ const Recipe = () => {
                 </div>
                 <div className='SUGGESTIONS px-5 flex flex-col gap-3'>
                     {Array.isArray(suggestionInfo) && suggestionInfo.slice(0,7).map((data, index) => (
-                        <SuggestionCard key={index} title={data.title} image={data.image} />
+                        <SuggestionCard key={index} id={data._id} title={data.title} image={data.image} />
                     ))}
                 </div>
             </div>

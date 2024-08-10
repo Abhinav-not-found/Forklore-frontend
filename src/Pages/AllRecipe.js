@@ -20,15 +20,17 @@ const AllRecipe = () => {
         getAllRecipe();
     }, []);
     return (
-        <div className='h-full pb-10 grid grid-cols-6 grid-rows-3 gap-y-5'>
-            {Array.isArray(allRecipe) && allRecipe.map((recipe, index) => (
-                <Card
+        <div className='h-screen'>
+            <div className='grid grid-cols-6 grid-rows-3 gap-y-5'>
+                {Array.isArray(allRecipe) && allRecipe.map((recipe, index) => (
+                    <Card
                     key={index}
                     title={recipe.title}
                     image={recipe.image}
                     id={recipe._id}
-                />
-            ))}
+                    />
+                ))}
+            </div>
         </div>
     )
 }

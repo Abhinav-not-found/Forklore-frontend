@@ -91,7 +91,7 @@ const Home = () => {
                     </div>
                 </div>
             ) : (
-                <div className='h-full pb-10'>
+                <div className='h-screen pb-10'>
                     <h1>All Recipes</h1>
                     <div className='grid grid-cols-6 grid-rows-3 gap-y-5'>
                         {Array.isArray(allRecipe) && allRecipe.map((recipe, index) => (
