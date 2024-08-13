@@ -11,7 +11,7 @@ const ProfilePage = () => {
     useEffect(()=>{
         const getInfoBasedOnUserId = async() =>{
             try {
-                const response = await axios.get(`http://localhost:5001/getInfoUserId/${id}`)
+                const response = await axios.get(`https://froklore-backend.onrender.com/getInfoUserId/${id}`)
                 if(response.status === 200){
                     // console.log(response.data.getRecipe)
                     setInfoArr(response.data.getRecipe)
@@ -22,7 +22,7 @@ const ProfilePage = () => {
         }
         const getUserInfo = async() =>{
             try {
-                const response = await axios.get(`http://localhost:5001/getUserInfo/${id}`)
+                const response = await axios.get(`https://froklore-backend.onrender.com/getUserInfo/${id}`)
                 if(response.status === 200){
                     // console.log(response.data.findUser)
                     setUserInfo(response.data.findUser)

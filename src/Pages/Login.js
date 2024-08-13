@@ -20,7 +20,7 @@ const Login = () => {
 
     const handleLogin = async () => {
         try {
-            const response = await axios.post('http://localhost:5001/login', { email, password});
+            const response = await axios.post('https://froklore-backend.onrender.com/login', { email, password});
             if (response.status === 200) {
                 toast.success('Logged in! Ready to 🌶️ Spice 🔥 Up?');
                 localStorage.setItem('token',response.data.token)

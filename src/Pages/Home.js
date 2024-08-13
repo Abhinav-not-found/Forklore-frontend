@@ -28,7 +28,7 @@ const Home = () => {
         }
         const getMyRecipe = async () => {
             try {
-                const response = await axios.get(`http://localhost:5001/getRecipe/${userId}`);
+                const response = await axios.get(`https://froklore-backend.onrender.com/getRecipe/${userId}`);
                 if (response.status === 200) {
                     setArr(response.data);
                 } else if (response.status === 201) {
@@ -44,7 +44,7 @@ const Home = () => {
     useEffect(() => {
         const getAllRecipe = async () => {
             try {
-                const response = await axios.get('http://localhost:5001/getAllRecipe');
+                const response = await axios.get('https://froklore-backend.onrender.com/getAllRecipe');
                 if (response.status === 200) {
                     setAllRecipe(response.data);
                 } else {

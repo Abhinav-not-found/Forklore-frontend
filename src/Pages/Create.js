@@ -33,7 +33,7 @@ const Create = () => {
 
     const handleSubmit =async()=>{
         try {
-            const response = await axios.post(`http://localhost:5001/create/${userId}`,{title,shortDesc,image,ingredients,recipe})
+            const response = await axios.post(`https://froklore-backend.onrender.com/create/${userId}`,{title,shortDesc,image,ingredients,recipe})
             if(response.status === 200){
                 toast.success('Recipe Created Successfully')
                 navigate('/')

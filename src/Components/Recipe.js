@@ -32,7 +32,7 @@ const Recipe = () => {
                 return;
             }
             try {
-                const response = await axios.get(`http://localhost:5001/recipe/${recipeId}`);
+                const response = await axios.get(`https://froklore-backend.onrender.com/recipe/${recipeId}`);
                 if (response.status === 200) {
                     setRecipeData(response.data.recipe);
                     setInUserId(response.data.recipe.userId)
@@ -58,7 +58,7 @@ const Recipe = () => {
             }
 
             try {
-                const response = await axios.post('http://localhost:5001/checkUserValidity', { userId });
+                const response = await axios.post('https://froklore-backend.onrender.com/checkUserValidity', { userId });
                 if (response.status === 200) {
                     setValidUser(true);
                     setUsername(response.data.checkUser.username);
@@ -85,7 +85,7 @@ const Recipe = () => {
     const [suggestionInfo, setSuggestionInfo] = useState([]);
     const getSuggestions = async () => {
         try {
-            const response = await axios.get(`http://localhost:5001/getSuggestion/${recipeData.userId}`);
+            const response = await axios.get(`https://froklore-backend.onrender.com/getSuggestion/${recipeData.userId}`);
             if (response.status === 200) {
                 console.log(response.data.recipeById._id);
                 setSuggestionInfo(response.data.recipeById);

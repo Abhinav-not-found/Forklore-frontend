@@ -18,7 +18,7 @@ const EditPage = () => {
     useEffect(() => {
         const getRecipeData = async () => {
             try {
-                const response = await axios.get(`http://localhost:5001/recipe/${recipeId}`);
+                const response = await axios.get(`https://froklore-backend.onrender.com/recipe/${recipeId}`);
                 if (response.status === 200) {
                     const data = response.data.recipe;
                     setRecipeData(data);
@@ -40,7 +40,7 @@ const EditPage = () => {
 
     const handleSave = async () => {
         try {
-            const response = await axios.patch(`http://localhost:5001/updateRecipe/${recipeId}`, {
+            const response = await axios.patch(`https://froklore-backend.onrender.com/updateRecipe/${recipeId}`, {
                 title,
                 shortDesc,
                 image,

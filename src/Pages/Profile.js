@@ -18,7 +18,7 @@ const Profile = () => {
     useEffect(()=>{
         const profileInfo = async()=>{
             const userId = localStorage.getItem('userId')
-            const response = await axios.get(`http://localhost:5001/profile/${userId}`)
+            const response = await axios.get(`https://froklore-backend.onrender.com/profile/${userId}`)
             // console.log(response.data.userInfo)
             setEmail(response.data.userInfo.email)
             setUsername(response.data.userInfo.username)
@@ -30,7 +30,7 @@ const Profile = () => {
     const handleUpdate =async()=>{
         try {
             const userId = localStorage.getItem('userId')
-            const response = await axios.put(`http://localhost:5001/profile/${userId}`,{email,username})
+            const response = await axios.put(`https://froklore-backend.onrender.com/profile/${userId}`,{email,username})
             if(response.status === 200){
                 toast.success('Updated Successfully')
             }
@@ -43,7 +43,7 @@ const Profile = () => {
     }
     const handlePasswordChange = async() =>{
         const userId = localStorage.getItem('userId')
-        const response = await axios.patch(`http://localhost:5001/profile/${userId}`,{oldPassword,newPassword})
+        const response = await axios.patch(`https://froklore-backend.onrender.com/profile/${userId}`,{oldPassword,newPassword})
         if(response.status === 200){
             toast.success('Updated Successfully')
         }
@@ -80,7 +80,7 @@ const Profile = () => {
         console.log('FormData entries:', formData.entries())
     
         try {
-            const response = await axios.post('http://localhost:5001/upload', formData, {
+            const response = await axios.post('https://froklore-backend.onrender.com/upload', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 }
@@ -110,7 +110,7 @@ const Profile = () => {
             <div className='flex flex-col gap-3'>
                 <p className='text-xl'>Profile Picture:</p>
                 <div onClick={handleClick} className='Profile-Preview-Circle cursor-pointer w-40 h-40 rounded-full'
-                style={{backgroundImage:`url(${profilePicURL || (profilePic ? `http://localhost:5001/${profilePic}` : defaultProfile)})`,
+                style={{backgroundImage:`url(${profilePicURL || (profilePic ? `https://froklore-backend.onrender.com/${profilePic}` : defaultProfile)})`,
                 backgroundSize:'cover',
                 backgroundPosition:'center',
                 backgroundRepeat:'no-repeat'

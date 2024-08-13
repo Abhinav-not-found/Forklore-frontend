@@ -25,7 +25,7 @@ const Other = ({ handleEdit }) => {
                 return;
             }
             try {
-                const response = await axios.get(`http://localhost:5001/recipe/${recipeId}`);
+                const response = await axios.get(`https://froklore-backend.onrender.com/recipe/${recipeId}`);
                 if (response.status === 200) {
                     setRecipeData(response.data.recipe);
                 } else {
@@ -47,7 +47,7 @@ const Other = ({ handleEdit }) => {
             }
 
             try {
-                const response = await axios.post('http://localhost:5001/checkUserValidity', { userId });
+                const response = await axios.post('https://froklore-backend.onrender.com/checkUserValidity', { userId });
                 if (response.status === 200) {
                     setValidUser(true);
                 } else {
@@ -66,7 +66,7 @@ const Other = ({ handleEdit }) => {
 
             // Fetch like info
             try {
-                const response = await axios.get(`http://localhost:5001/getLikeInfo/${recipeId}`);
+                const response = await axios.get(`https://froklore-backend.onrender.com/getLikeInfo/${recipeId}`);
                 if (response.status === 200) {
                     setLikeCounter(response.data.data.like.length);
                     setLiked(response.data.data.like.includes(userId));
@@ -82,7 +82,7 @@ const Other = ({ handleEdit }) => {
     const handleDelete = async () => {
         if (window.confirm('Are you sure?')) {
             try {
-                const response = await axios.delete(`http://localhost:5001/delete/${recipeId}`);
+                const response = await axios.delete(`https://froklore-backend.onrender.com/delete/${recipeId}`);
                 if (response.status === 200) {
                     toast.success('Deleted Successfully');
                     navigate('/');
@@ -109,7 +109,7 @@ const Other = ({ handleEdit }) => {
 
     const handleLikeReq = async () => {
         try {
-            const response = await axios.put('http://localhost:5001/like', { userId, recipeId });
+            const response = await axios.put('https://froklore-backend.onrender.com/like', { userId, recipeId });
             if (response.status === 200 || response.status === 201) {
                 console.log('like added');
             } else if (response.status === 400) {
@@ -122,7 +122,7 @@ const Other = ({ handleEdit }) => {
 
     const handleUnLikeReq = async () => {
         try {
-            const response = await axios.put('http://localhost:5001/unLike', { userId, recipeId });
+            const response = await axios.put('https://froklore-backend.onrender.com/unLike', { userId, recipeId });
             if (response.status === 200) {
                 console.log('like removed');
             }

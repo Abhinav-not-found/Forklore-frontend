@@ -23,7 +23,7 @@ const Navbar = () => {
         const fetchProfilePicture = async () => {
             try {
                 const userId = localStorage.getItem('userId');
-                const response = await axios.get(`http://localhost:5001/getUserInfo/${userId}`);
+                const response = await axios.get(`https://froklore-backend.onrender.com/getUserInfo/${userId}`);
                 setProfilePic(response.data.findUser.username);
                  // Ensure profilePic is correctly set
                 // console.log(profilePic[0])

@@ -26,7 +26,7 @@ const Register = () => {
 
     const handleRegister = async () => {
         try {
-            const response = await axios.post('http://localhost:5001/register', { email, password,username});
+            const response = await axios.post('https://froklore-backend.onrender.com/register', { email, password,username});
             if (response.status === 200) {
                 toast.success('Successfully registered');
                 navigate('/login');
