@@ -60,7 +60,7 @@ const Home = () => {
     return (
         <div className=''>
             {isLoggedIn ? (
-                <div className='h-full pb-10'>
+                <div className='h-screen pb-10'>
                     <div className='flex justify-between'>
                         <h1>All Recipes</h1>
                         <button onClick={()=>navigate('/allRecipe')}>See All</button>

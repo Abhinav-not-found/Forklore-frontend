@@ -36,8 +36,9 @@ const ProfilePage = () => {
     },[id])
     return (
         <div className='h-screen'>
-            <div className='USER_INFO'>
-                <h1 className='text-3xl mb-10'>@{userInfo.username}</h1>
+            <div className='USER_INFO flex items-center gap-4 mb-10'>
+                <div className='bg-red-300 h-20 w-20 rounded-full flex items-center justify-center text-3xl' >{userInfo.username[0]}</div>
+                <h1 className='text-3xl'>@{userInfo.username}</h1>
             </div>
             <div className='grid grid-cols-6 grid-rows-3 gap-y-5'>
             {Array.isArray(infoArr) && infoArr.map((recipe, index) => (

@@ -62,6 +62,7 @@ const Recipe = () => {
                 if (response.status === 200) {
                     setValidUser(true);
                     setUsername(response.data.checkUser.username);
+                    // console.log(response.data)
                 } else {
                     console.log('User is Invalid');
                     setValidUser(false);
@@ -152,7 +153,9 @@ const Recipe = () => {
                 <div className='PROFILE h-40 px-5'>
                     <p>Posted By:</p>
                     <div onClick={()=>{navigate(`/profilePage/${InUserId}`)}} className='flex items-center gap-5 mt-1 rounded-lg cursor-pointer border border-gray-300 py-4'>
-                        <div className='PROFILE_PICTURE w-20 h-20 ml-6 bg-yellow-300 rounded-full'></div>
+                        <div className='PROFILE_PICTURE w-20 h-20 ml-6 bg-red-300 rounded-full flex items-center justify-center text-4xl'>
+                            {username[0]}
+                        </div>
                         <div>
                             <h1 className='text-2xl'>{username}</h1>
                         </div>

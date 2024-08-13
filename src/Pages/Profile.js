@@ -8,6 +8,7 @@ const Profile = () => {
     const [oldPassword,setOldPassword]=useState('')
     const [newPassword,setNewPassword]=useState('')
     const [profilePic,setProfilePic]=useState(null)
+    const [profilePicURL,setProfilePicURL]=useState(null)
 
     const handleEmailChange = (e) => setEmail(e.target.value);
     const handleUsernameChange = (e) => setUsername(e.target.value);
@@ -18,9 +19,11 @@ const Profile = () => {
         const profileInfo = async()=>{
             const userId = localStorage.getItem('userId')
             const response = await axios.get(`http://localhost:5001/profile/${userId}`)
-            console.log(response.data.userInfo)
+            // console.log(response.data.userInfo)
             setEmail(response.data.userInfo.email)
             setUsername(response.data.userInfo.username)
+            setProfilePic(response.data.userInfo.profilePic)
+            
         }
         profileInfo()
     },[])
@@ -52,50 +55,71 @@ const Profile = () => {
         }
     }
 
-    const handleFileChange =(e)=>{setProfilePic(e.target.files[0])}
 
-    const handleFileUpload = async()=>{
-        if(!profilePic){
-            toast.error('Please select file first')
-        }
-        const formData = new FormData();
-        formData.append('profilePic',profilePic)
-        try {
-            const response = await axios.post('http://localhost:5001/upload',formData,{
-                headers:{
-                    'Content-Type':"multipart/form-data",
-                }
-            })
-            if(response.status===200){
-                toast.success('File Uploaded Successfully')
-            }
-            else{
-                toast.error('File Uploaded Failed')
-            }
-        } catch (error) {
-            toast.error('Something Went Wrong')
+
+    const handleFileChange =(e)=>{
+        const file = e.target.files[0];
+        if (file) {
+            setProfilePic(file);
+            setProfilePicURL(URL.createObjectURL(file));
+        } else {
+            toast.error('No file selected!');
         }
     }
+
+    const handleFileUpload = async () => {
+        if (!profilePic) {
+            toast.error('Please select a file first');
+            return;
+        }
+    
+        const formData = new FormData();
+        formData.append('profilePic', profilePic);
+        formData.append('userId', localStorage.getItem('userId'));
+
+        console.log('FormData entries:', formData.entries())
+    
+        try {
+            const response = await axios.post('http://localhost:5001/upload', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                }
+            });
+    
+            if (response.status === 200) {
+                toast.success('Profile picture updated successfully');
+                setProfilePic(response.data.filePath)
+                setProfilePicURL(null)
+            } else {
+                toast.error('File upload failed');
+            }
+        } catch (error) {
+            console.error('Error:', error.response?.data || error.message);
+            toast.error('Something went wrong');
+        }
+    };
+    
 
     const handleClick = () =>{
         document.getElementById('input').click()
     }
     return (
         <div className='h-screen'>
-            {/* <div className='flex flex-col gap-3'>
+
+{/* 
+            <div className='flex flex-col gap-3'>
                 <p className='text-xl'>Profile Picture:</p>
-                <div onClick={handleClick} className='Profile-Preview-Circle w-40 h-40 bg-red-300 rounded-full'
-                style={{backgroundImage:`url(${defaultProfile})`,
-                    backgroundSize:'cover',
-                    backgroundPosition:'center',
-                    backgroundRepeat:'no-repeat'
-                    }}  
+                <div onClick={handleClick} className='Profile-Preview-Circle cursor-pointer w-40 h-40 rounded-full'
+                style={{backgroundImage:`url(${profilePicURL || (profilePic ? `http://localhost:5001/${profilePic}` : defaultProfile)})`,
+                backgroundSize:'cover',
+                backgroundPosition:'center',
+                backgroundRepeat:'no-repeat'
+            }}  
                 >
                     <input id='input' type="file" onChange={handleFileChange} className='w-full hidden'/>
                 </div>
 
                 <button onClick={handleFileUpload} className='border border-black px-3 py-1 rounded-lg w-fit'>upload</button>
-
             </div> */}
 
 
